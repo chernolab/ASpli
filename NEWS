@@ -1,0 +1,169 @@
+CHANGES IN VERSION 1.99.3
+-------------------------
+
+NEW FUNCTIONS AND FUNCTIONALITIES
+
+    * New parameters for gbCounts and jCounts functions: 
+       * libType: to specify single end  ("SE") or paired end ("PE") library
+       * strandMode: 
+       - 0: strand of the pair is always *.
+       - 1: strand of the pair is strand of its first alignment
+       - 2: strand of the pair is strand of its last alignment.
+    
+CHANGES IN VERSION 1.99.1
+-------------------------
+
+NEW FUNCTIONS AND FUNCTIONALITIES
+    
+    * For counting: gbCounts  and jCounts. We add library type and strand-specificity parameters.
+    
+    * For DU estimation: DUreport.norm and DUreport.offset
+    
+    * For prepare DU reports: filterSignals, gbDUreport, integrateSignals, jDUreport, splicingReport and junctionsPJU
+    
+    * For printing reports: exportIntegratedSignals, writeJDU and writeSplicingReport
+    
+FUNCTIONS DEPRECATED
+    
+    * loadBAM: will be replaced by gbCounts. Bams files are proccesed one by one, according target object. It improves running time and memory usage
+  
+    * readCounts: it is replaced by  gbCounts
+  
+    * AsDiscover: it is replaced by jCounts
+  
+    * DUreport: it is replaced by gbDUreport and jDUreport
+  
+    * mergeBinDUAS: has no direct replacement. 
+  
+    * plotGenomicRegions: has not direct replacement. There are new functions for exportiing results into HTML pages.
+
+
+CHANGES IN VERSION 1.5.1
+-------------------------
+
+BUG FIXES
+
+    * readCounts supports identical gene names in different chromosomes.
+    
+    * Fixed default value for minAnchor argument of readCounts code, man page
+      and vignette.  
+
+CHANGES IN VERSION 1.3.12
+-------------------------
+
+FEATURES
+
+    * Events named previously as 'as' are now names 'Undefined AS' for the sake 
+      of clarity.  
+      
+    * Enhancement to the vignettes.
+
+BUG FIXES
+
+    * Added verbose and filterWithContrasted arguments to DUreport method.
+
+
+CHANGES IN VERSION 1.3.11
+-------------------------
+
+FEATURES
+
+    * Change the assigning of some 'ES*' events to 'as' events.
+
+    * Added verbose option of DUreportBinSplice method
+
+    * junctionDUReport methods changed to junctionDUreport to be consistent with
+      other methods names.
+
+BUG FIXES
+
+    * Many corrections in the vignette and man pages.
+
+    * ZNF410_E013.gr.pdf file in vignettes/images was changed to 
+      ZNF410_E013_gr.pdf to be correctly used in the latex code.  
+
+
+CHANGES IN VERSION 1.3.10
+-------------------------
+
+DOCUMENTATION
+
+    * Vignette is updated to reflect changes in objects, methods and functions.
+      Minor revisions are still required. 
+
+BUG FIXES
+
+    * PlotGenomicRegions now can make plots from unmerged bams correctly.
+
+CHANGES IN VERSION 1.3.9
+------------------------
+
+BUG FIXES
+
+    * plotBins function now shows x-tick labels correctly.    
+
+
+CHANGES IN VERSION 1.3.8
+------------------------
+
+FEATURES
+
+    * PlotGenomicRegions do not requires an ASpliCounts object
+
+
+CHANGES IN VERSION 1.3.8
+------------------------
+
+BUG FIXES
+
+    * AsDiscover and DUreport can handle conditions with one samples. Results 
+      should be taken with care, but ASpli doesn't break.
+
+    
+CHANGES IN VERSION 1.3.7
+------------------------
+
+FEATURES
+
+    * Added functions to filter elements in ASpliCounts objects by read counts
+      and read density.
+
+
+CHANGES IN VERSION 1.3.6
+------------------------
+
+FEATURES
+
+    * geneMode is the default mode of offset estimation.
+
+CHANGES IN VERSION 1.2.1 / 1.3.1
+------------------------
+
+BUG FIXES
+
+    * AsDiscover() no longer contains mixed row data for some IR and IR* bins in
+      irPIR table. 
+
+    * DUReport() calculates correctly junction ratio for junctions sharing their
+      end in junction.counts table.
+      
+    * DUReport() no longer fails when there are no junctions that share their 
+      start or end.
+      
+    * reacCounts() requires an explicit targets argument, instead of taking it 
+      from the global environment (in which may not exist with that name).  
+
+      
+CHANGES IN VERSION 1.1.0
+------------------------
+
+NEW FEATURES
+
+    * New ASpli_binGenome.log file. It reports the number of features being processed
+      
+CHANGES IN VERSION 0.98
+-------------------------
+
+NEW FEATURES
+    
+    * Multiple bins are reclassified using annotated junctions

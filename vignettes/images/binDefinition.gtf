@@ -1,0 +1,8 @@
+reference	protein_coding	exon	101	200	.	+	.	gene_id "GENE01"; transcript_id "TX01.2"; exon_number "1";
+reference	protein_coding	exon	601	700	.	+	.	gene_id "GENE01"; transcript_id "TX01.2"; exon_number "2";
+reference	protein_coding	exon	101	200	.	+	.	gene_id "GENE01"; transcript_id "TX01.3"; exon_number "1";
+reference	protein_coding	exon	401	500	.	+	.	gene_id "GENE01"; transcript_id "TX01.3"; exon_number "2";
+reference	protein_coding	exon	601	700	.	+	.	gene_id "GENE01"; transcript_id "TX01.3"; exon_number "3";
+reference	protein_coding	exon	1  	200	.	+	.	gene_id "GENE01"; transcript_id "TX01.1"; exon_number "1";
+reference	protein_coding	exon	401	500	.	+	.	gene_id "GENE01"; transcript_id "TX01.1"; exon_number "2";
+reference	protein_coding	exon	601	700	.	+	.	gene_id "GENE01"; transcript_id "TX01.1"; exon_number "3";

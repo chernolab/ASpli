@@ -1,0 +1,51 @@
+\documentclass{article}
+
+% \VignetteIndexEntry{ASpli}
+
+\RequirePackage[]{/home/andy/R-4.0.2/library/BiocStyle/resources/tex/Bioconductor}
+\AtBeginDocument{\bibliographystyle{/home/andy/R-4.0.2/library/BiocStyle/resources/tex/unsrturl}}
+\usepackage[noae, nogin]{Sweave}
+\usepackage{verbatim} 
+\usepackage{caption} 
+\usepackage{cite}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{float}
+
+\newcommand{\RNAseq}{\textrm{\textbf{RNA}-\textbf{Seq}}}
+\newcommand{\secref}[1]{\ref{#1} : \nameref{#1}}
+
+\newfloat{captionedEq}{thp}{eqc}
+\floatname{captionedEq}{Equation}
+
+\title{\texttt{ASpli}: An integrative R package for analysing alternative splicing using RNA-seq}
+
+\author{Estefania Mancini, Andres Rabinovich, Javier Iserte, Marcelo Yanovsky, Ariel Chernomoretz}
+
+\usepackage{Sweave}
+\begin{document}
+\input{ASpli-concordance}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+Alternative splicing (AS) is a common mechanism of post-transcriptional gene 
+regulation in eukaryotic organisms that expands the functional and regulatory 
+diversity of a single gene by generating multiple mRNA isoforms that encode 
+structurally and functionally distinct proteins. 
+
+Genome-wide analysis of AS has been a very active field of research since 
+the early days of NGS (Next generation sequencing) technologies.  Since then, evergrowing data availability and the development of increasingly sophisticated analysis methods have uncovered 
+the complexity of the general splicing repertoire.  
+
+In this vignette we describe how to use \texttt{ASpli}, an integrative and user-friendly
+R package that facilitates the analysis of changes in both annotated and novel 
+AS events. 
+
+Differently form other approaches, ASpli was specifically designed to integrate several independent signals in order to deal with the complexity that might arise in splicing patterns. Taking into account genome annotation information, ASpli considers bin-based signals along  with junction inclusion indexes in order to assess for statistically significant changes in read coverage. In addition, annotation-independent signals are estimated based on the complete set of experimentally detected splice junctions.  ASpli makes use of a generalized linear model framework (as implemented in edgeR R-package \cite{Robinson2010}) to assess for the statistical  analysis of specific contrasts of interest. In this way, ASpli can provide a comprehensive description of genome-wide splicing alterations even for complex experimental designs. 
+
+A typical ASpli workflow  involves: parsing the genome annotation into subgenic features called bins, overlapping read alignments against them, perform junction counting, fulfill inference tasks of differential bin and junction usage and, finally, report integrated splicing signals. At every step ASpli generates self-contained outcomes that, if required, can be easily exported and integrated into other processing pipelines. 
+

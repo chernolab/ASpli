@@ -1,0 +1,82 @@
+exportPattern("^[[:alpha:]]+")
+import(methods)
+import(utils)
+import(BiocGenerics)
+import(IRanges)
+import(GenomicRanges)
+import(GenomicFeatures)
+import(edgeR)
+import(Rsamtools)
+import(BiocStyle)
+import(GenomicAlignments)
+import(UpSetR)
+import(AnnotationDbi)
+importFrom("grDevices", "dev.off", "png", "rgb", "bmp", "col2rgb", "dev.new", "jpeg", "pdf", "tiff", "topo.colors")
+importFrom("stats", "aggregate", "formula", "p.adjust", "model.matrix", "setNames", "na.pass", "ecdf")
+importFrom("graphics", "axis", "barplot", "legend", "lines", "par","plot", "title", "abline", "layout", "mtext", "points", "polygon", "rect", "text")
+importFrom("igraph", "graph_from_edgelist", "clusters")
+importFrom("limma", "strsplit2")
+importFrom("data.table", "data.table", "as.data.table", "rbindlist")
+importFrom(parallel, mclapply)
+importFrom("tidyr", "replace_na")
+importFrom("MASS", "ginv")
+import(S4Vectors)
+import(Gviz, except=c(tags))
+import(DT)
+import(grid)
+import(htmltools)
+exportMethods(
+    "jCounts",
+    "binGenome",
+    "DUreport",
+    "DUreport.norm",
+    "DUreport.offset",
+    "writeAS",
+    "writeCounts",
+    "writeDU",
+    "writeJDU",
+    "writeSplicingReport",
+    "writeRds",
+    "rds",
+    "gbCounts",
+    "featuresg",
+    "featuresb",
+    "featuresj",
+    "countsg",
+    "countsb",
+    "countsj",
+    "countse1i",
+    "countsie2",
+    "rdsg",
+    "rdsb",
+    "irPIR",
+    "altPSI",
+    "esPSI",
+    "joint",
+    "junctionsPIR",
+    "junctionsPJU",
+    "genesDE",
+    "binsDU",
+    "junctionsDU",
+    "gbDUreport",
+    "show",
+    "jDUreport",
+    "containsGenesAndBins",
+    "containsJunctions",
+    "subset",
+    "mergeBinDUAS",
+    "filterDU",
+    "splicingReport",
+    "integrateSignals",
+    "exportIntegratedSignals",
+    "filterSignals"
+)
+exportClasses(
+    "ASpliAS",
+    "ASpliCounts",
+    "ASpliDU",
+    "ASpliFeatures",
+    "ASpliJDU",
+    "ASpliSplicingReport",
+    "ASpliIntegratedSignals"
+)
