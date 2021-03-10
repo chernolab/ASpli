@@ -19,14 +19,9 @@ the early days of NGS (Next generation sequencing) technologies.  Since then, ev
 A typical `ASpli` workflow  involves: parsing the genome annotation into subgenic features called bins, overlapping read alignments against them, perform junction counting, fulfill inference tasks of differential bin and junction usage and, finally, report integrated splicing signals. At every step `ASpli` generates self-contained outcomes that, if required, can be easily exported and integrated into other processing pipelines. 
 
 ## Installation
-As of July 2020, ASpli is freely available at Bioconductor devel branch. It will be part of the next Bioconductor official release scheduled for October 2020
 
     if (!requireNamespace("BiocManager", quietly = TRUE))
       install.packages("BiocManager")
-   
-    # The following line initializes usage of Bioc devel branch and 
-    # should not be necessary after the next official release scheduled for October 2020
-    if(Sys.Date()<"2020-11-01") BiocManager::install(version='devel')
    
     BiocManager::install("ASpli")
    
@@ -37,43 +32,87 @@ As of July 2020, ASpli is freely available at Bioconductor devel branch. It will
 Note: **samtools** is also required for image creation when exporting integrated signals (reports can be generated without **samtools** if images are not required).
 
 ## Quick start
+ASpli provides toy BAM and GTF files to introduce the working pipeline.
 Here is an example for a pairwise comparison between 2 conditions (Control vs Treatment, 3 replicates each) using default parameters.
-Extract features from genome, define targets data.frame with phenotype data, and mBAMs data.frame with phenotype data for merged BAMs:
 
-    genome   <- loadDb("txdb.sqlite")
-    features <- binGenome(genome)
-    targets  <- data.frame(bam = c("CT_1.BAM", "CT_2.BAM","CT_3.BAM", "TR_1.BAM", "TR_2.BAM", "TR_3.BAM"), 
-                           genotype = c( "CT", "CT", "CT", "TR", "TR", "TR" ), stringsAsFactors = FALSE )
-    mBAMs <- data.frame(bam=c("CT.BAM", "TR.BAM"),condition=c("CT","TR"))
-    
+Extract features from genome, define *targets* data.frame with phenotype data, and *mBAMs* data.frame with phenotype data for merged BAMs:
+
+```
+library(ASpli)
+library(GenomicFeatures)
+
+# gtf preprocessing ----
+gtfFileName <- aspliExampleGTF()
+genomeTxDb  <- makeTxDbFromGFF( gtfFileName )
+
+# feature extraction ----
+features    <- binGenome( genomeTxDb )
+
+#bams and target file ----
+BAMFiles <- aspliExampleBamList()
+targets  <- data.frame(row.names = paste0('Sample',c(1:6)),
+                       bam = BAMFiles[1:6],
+                       f1  = c( 'control','control','control','treatment','treatment','treatment'),
+                       stringsAsFactors = FALSE)
+mBAMs <- data.frame( bam = sub("_[012]","",targets$bam[c(1,4)]),
+                     condition = c("control","treatment"))
+```
+
+
 Read counting against annotated features:
+```
+gbcounts <- gbCounts(features=features, targets=targets,
+                     minReadLength = 100, maxISize = 50000)
+gbcounts
+```
 
-    counts <- gbCounts(features = features, targets = targets, minReadLength = 125L, maxISize = 50000)
-    
-Junction-based de-novo counting:
 
-    asd <- jCounts(counts = counts, features = features, minReadLength =125L)
-    
-Differential signal estimation:
+Junction-based *de-novo* counting and splicing signal estimation:
 
-    gb   <- gbDUreport(counts, contrast = c(-1, 1))
-    jdur <- jDUreport(asd, contrast = c(-1, 1))
-    
-Report and signal integration:
+```
+asd <- jCounts(counts=gbcounts, features=features, minReadLength=100)
+asd
+```
 
-    sr <- splicingReport(gb, jdur, counts)
-    is <- integrateSignals(sr,asd)
-    
+Differential gene expression and bin usage signal estimation:
+```
+gb  <- gbDUreport(gbcounts, contrast = c(-1,1))
+gb
+```
+
+Differential junction usage analysis:
+```
+jdur <- jDUreport(asd, contrast=c(-1,1))
+jdur
+```
+
+Bin and junction signal integration:
+```
+sr <- splicingReport(gb, jdur, counts=gbcounts)
+```
+
+Summary of integration of splicing signals along genomic-regions. 
+```
+is <- integrateSignals(sr,asd)
+```
+
 Export results:
-
-    exportSplicingReports( sr, output.dir="results")
-    exportIntegratedSignals(is,sr=sr, output.dir = "results", counts=counts,
-                              features=features,asd=asd, mergedBams = mBAMs)
+```
+exportIntegratedSignals(is,sr=sr,
+                          output.dir = "aspliExample",
+                          counts=gbcounts,features=features,asd=asd,
+                          mergedBams = mBAMs)
+```
 
 ## Documentation and help
 Entry point for ASpli documentation is ASpli vignette, available after installing ASpli from R:
 
     browseVignettes("ASpli")
     
-If user has a question not answered in ASpli vignette, ASpli has an issue board with previous issues available in gitlab.
+If user has a question not answered in ASpli vignette, ASpli has an issue board with previous issues available in https://github.com/chernolab/ASpli.
 If no previous issue answers the question, user can upload a new issue requesting help.
+
+## Citation
+*ASpli: Integrative analysis of splicing landscapes through RNA-seq assays*, Mancini E, Rabinovich A, Iserte J, Yanovsky M, Chernomoretz A, Bioinformatics, March 2021, 
+
+
